@@ -155,7 +155,7 @@ gulp.task('watch', function() {
 });
 
 /**
- * Runs all the needed commands to dump all assets and manifests
+ * Runs all the needed commands to dump all assets
  */
 gulp.task('dump', ['less', 'css', 'js']);
 
