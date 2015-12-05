@@ -4,7 +4,7 @@ This is a sample of Gulpfile to be used with config instead of "re-developing" m
 
 ## Install
 
-* Copy/paste the `gulpfile.js` and the `package.json` file in the root directory of your project.
+* Copy/paste the `gulpfile.js` and the `package.json` files in the root directory of your project.
 * Run `npm install && npm shrinkwrap` command
  * [What is `shrinkwrap`?](https://docs.npmjs.com/cli/shrinkwrap)
    It's something you *must* use.
