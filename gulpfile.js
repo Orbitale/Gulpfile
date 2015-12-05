@@ -155,7 +155,7 @@ gulp.task('watch', function() {
 });
 
 /**
- * Runs all the needed commands to dump all assets
+ * Runs all the needed commands to dump all assets and manifests
  */
 gulp.task('dump', ['less', 'css', 'js']);
 
@@ -165,13 +165,14 @@ gulp.task('dump', ['less', 'css', 'js']);
 gulp.task('default', function(){
     console.info("");
     console.info("usage: gulp [command] [--prod]");
+    console.info("");
     console.info("Options:");
     console.info("    --prod       If specified, will run some minifycss and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
-    console.info("    less         Dumps the Less assets to the \"css\" output directory.");
-    console.info("    css          Dumps the CSS assets to the \"css\" output directory.");
-    console.info("    js           Dumps the JS assets to the \"js\" output directory.");
+    console.info("    less         Dumps the sources in the `config.less` parameter.");
+    console.info("    css          Dumps the sources in the `config.css` parameter.");
+    console.info("    js           Dumps the sources in the `config.js` parameter.");
     console.info("    dump         Executes all the above commands.");
     console.info("    watch        Watches all assets to dump them all when one is modified.");
     console.info("");
