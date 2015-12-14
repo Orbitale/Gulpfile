@@ -12,10 +12,14 @@ var gulp         = require('gulp'),
     autoprefixer = require('gulp-autoprefixer')
 ;
 
+// This var is an exemple of the assets you can use in your own application.
+// The array KEYS correspond to the OUTPUT files,
+// The array VALUES contain a LIST OF SOURCE FILES
 var config = {
     "output_directory": "web",
     "less": {
         "css/main_less.css": [
+            "web/components/bootstrap/less/bootstrap.less",
             "src/AppBundle/Resources/public/less/main.less"
         ]
     },
@@ -26,6 +30,7 @@ var config = {
     },
     "js": {
         "js/main.js": [
+            "web/components/bootstrap/dist/bootstrap-src.js",
             "src/AppBundle/Resources/public/css/main.js"
         ]
     }
