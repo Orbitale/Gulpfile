@@ -139,7 +139,7 @@ gulp.task('watch', function() {
         },
         i;
 
-    console.info('Night gathers, and now my watch begins ' + (new Date));
+    console.info('Night gathers, and now my watch begins... At ' + (new Date));
 
     for (i in config.less) {
         if (!config.less.hasOwnProperty(i)) { continue; }
