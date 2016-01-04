@@ -180,6 +180,6 @@ gulp.task('default', function(){
     console.info("    css          Dumps the sources in the `config.css` parameter.");
     console.info("    js           Dumps the sources in the `config.js` parameter.");
     console.info("    dump         Executes all the above commands.");
-    console.info("    watch        Watches all assets to dump them all when one is modified.");
+    console.info("    watch        Executes 'dump', and then watches all assets to dump them all when any is modified.");
     console.info("");
 });
