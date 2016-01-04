@@ -130,7 +130,7 @@ gulp.task('js', function() {
 /**
  * Will watch for files and run "dump" for each modification
  */
-gulp.task('watch', function() {
+gulp.task('watch', ['dump'], function() {
     var less = [],
         css = [],
         js = [],
