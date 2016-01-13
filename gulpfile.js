@@ -37,7 +37,7 @@ var gulp         = require('gulp'),
     minifycss    = require('gulp-minify-css'),
     sourcemaps   = require('gulp-sourcemaps'),
     autoprefixer = require('gulp-autoprefixer')
-    ;
+;
 
 var isProd = process.argv.indexOf('--prod') >= 0;
 
@@ -50,7 +50,7 @@ gulp.task('less', function() {
     var list = config.less,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
-        ;
+    ;
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
@@ -81,7 +81,7 @@ gulp.task('css', function() {
     var list = config.css,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
-        ;
+    ;
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
@@ -111,7 +111,7 @@ gulp.task('js', function() {
     var list = config.js,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
-        ;
+    ;
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
