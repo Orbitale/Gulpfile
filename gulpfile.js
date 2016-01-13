@@ -1,17 +1,4 @@
-/**
- * Gulp file to use to manage assets
- */
-var gulp         = require('gulp'),
-    gulpif       = require('gulp-if'),
-    watch        = require('gulp-watch'),
-    less         = require('gulp-less'),
-    concat       = require('gulp-concat'),
-    uglyfly      = require('gulp-uglyfly'),
-    minifycss    = require('gulp-minify-css'),
-    sourcemaps   = require('gulp-sourcemaps'),
-    autoprefixer = require('gulp-autoprefixer')
-;
-
+// There here is YOUR config
 // This var is an exemple of the assets you can use in your own application.
 // The array KEYS correspond to the OUTPUT files,
 // The array VALUES contain a LIST OF SOURCE FILES
@@ -35,6 +22,23 @@ var config = {
         ]
     }
 };
+
+// End of custom config
+// Everything AFTER this line of code is updatable to the latest version of this gulpfile.
+
+/**
+ * Gulp file to use to manage assets
+ */
+var gulp         = require('gulp'),
+    gulpif       = require('gulp-if'),
+    watch        = require('gulp-watch'),
+    less         = require('gulp-less'),
+    concat       = require('gulp-concat'),
+    uglyfly      = require('gulp-uglyfly'),
+    minifycss    = require('gulp-minify-css'),
+    sourcemaps   = require('gulp-sourcemaps'),
+    autoprefixer = require('gulp-autoprefixer')
+;
 
 var isProd = process.argv.indexOf('--prod') >= 0;
 
@@ -183,3 +187,8 @@ gulp.task('default', function(){
     console.info("    watch        Executes 'dump', and then watches all assets to dump them all when any is modified.");
     console.info("");
 });
+
+// Gulpfile with a single var as configuration.
+// License: MIT
+// Author: Alex "Pierstoval" Rock Ancelet <alex@orbitale.io>
+// Repository: https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc
