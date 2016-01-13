@@ -23,12 +23,11 @@ var config = {
     }
 };
 
-// End of custom config
+/*************** End config ***************/
 // Everything AFTER this line of code is updatable to the latest version of this gulpfile.
+// Check it out there if you need: https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc
 
-/**
- * Gulp file to use to manage assets
- */
+// Required extensions
 var gulp         = require('gulp'),
     gulpif       = require('gulp-if'),
     watch        = require('gulp-watch'),
@@ -38,7 +37,7 @@ var gulp         = require('gulp'),
     minifycss    = require('gulp-minify-css'),
     sourcemaps   = require('gulp-sourcemaps'),
     autoprefixer = require('gulp-autoprefixer')
-;
+    ;
 
 var isProd = process.argv.indexOf('--prod') >= 0;
 
@@ -51,7 +50,7 @@ gulp.task('less', function() {
     var list = config.less,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
-    ;
+        ;
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
