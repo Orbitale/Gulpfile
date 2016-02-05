@@ -11,3 +11,11 @@ This is a sample of Gulpfile to be used with config instead of "re-developing" m
 * Update the `config` variable in the `gulpfile.js` file so it fits to your needs.
 * To view how this gulpfile works, simply run `gulp default` or `gulp` without any argument.
 * Enjoy!
+
+Or execute this command:
+
+```bash
+wget https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc/archive/master.zip && unzip -u -o master.zip && cp -f 9d88b0dcb64f30eff4dc-master/{gulpfile.js,package.json} ./ && rm -rf 9d88b0dcb64f30eff4dc-master/* master.zip
+```
+
+**Warning:** This will override your potentially existing `gulpfile.js` or `package.json` files.
