@@ -40,7 +40,7 @@ var gulp         = require('gulp'),
     sass         = require('gulp-sass'),
     concat       = require('gulp-concat'),
     uglyfly      = require('gulp-uglyfly'),
-    minifycss    = require('gulp-minify-css'),
+    cssnano      = require('gulp-cssnano'),
     sourcemaps   = require('gulp-sourcemaps'),
     autoprefixer = require('gulp-autoprefixer')
 ;
@@ -65,10 +65,7 @@ gulp.task('less', function() {
             .pipe(less())
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, minifycss({
-                keepBreaks: false,
-                keepSpecialComments: 0
-            })))
+            .pipe(gulpif(isProd, cssnano()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
@@ -96,10 +93,7 @@ gulp.task('sass', function() {
             .pipe(sass())
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, minifycss({
-                keepBreaks: false,
-                keepSpecialComments: 0
-            })))
+            .pipe(gulpif(isProd, cssnano()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
@@ -126,10 +120,7 @@ gulp.task('css', function() {
             .src(assets)
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, minifycss({
-                keepBreaks: false,
-                keepSpecialComments: 0
-            })))
+            .pipe(gulpif(isProd, cssnano()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
