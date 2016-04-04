@@ -20,6 +20,7 @@ unzip -u -o piersgulpfile.zip
 cp -f 9d88b0dcb64f30eff4dc-master/{gulpfile.js,package.json} ./
 rm -rf 9d88b0dcb64f30eff4dc-master piersgulpfile.zip
 npm install
+ 
 ```
 
 **Warning:** This will override your potentially existing `gulpfile.js` or `package.json` files.
