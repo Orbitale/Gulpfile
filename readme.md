@@ -15,10 +15,10 @@ This is a sample of Gulpfile to be used with config instead of "re-developing" m
 Or execute these commands in your project's root:
 
 ```bash
-wget https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc/archive/master.zip
-unzip -u -o master.zip
+wget https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc/archive/master.zip -O piersgulpfile.zip
+unzip -u -o piersgulpfile.zip
 cp -f 9d88b0dcb64f30eff4dc-master/{gulpfile.js,package.json} ./
-rm -rf 9d88b0dcb64f30eff4dc-master master.zip
+rm -rf 9d88b0dcb64f30eff4dc-master piersgulpfile.zip
 npm install
 ```
 
