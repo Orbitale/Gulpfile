@@ -174,27 +174,46 @@ gulp.task('watch', ['dump'], function() {
     console.info('Night gathers, and now my watch begins...');
 
     for (i in config.less) {
-        if (!config.less.hasOwnProperty(i)) { continue; }
+        if (!config.less.hasOwnProperty(i)) {
+            continue;
+        }
         files_less.push(config.less[i]);
+        console.info('Watching file: '+config.less[i]);
     }
     for (i in config.sass) {
-        if (!config.sass.hasOwnProperty(i)) { continue; }
+        if (!config.sass.hasOwnProperty(i)) {
+            continue;
+        }
         files_sass.push(config.sass[i]);
+        console.info('Watching file: '+config.sass[i]);
     }
     for (i in config.css) {
-        if (!config.css.hasOwnProperty(i)) { continue; }
+        if (!config.css.hasOwnProperty(i)) {
+            continue;
+        }
         files_css.push(config.css[i]);
+        console.info('Watching file: '+config.css[i]);
     }
     for (i in config.js) {
-        if (!config.js.hasOwnProperty(i)) { continue; }
+        if (!config.js.hasOwnProperty(i)) {
+            continue;
+        }
         files_js.push(config.js[i]);
+        console.info('Watching file: '+config.js[i]);
     }
 
-    gulp.watch(files_less, ['less']).on('change', callback);
-    gulp.watch(files_sass, ['sass']).on('change', callback);
-    gulp.watch(files_css, ['css']).on('change', callback);
-    gulp.watch(files_js, ['js']).on('change', callback);
-
+    if (files_less.length) {
+        gulp.watch(files_less, ['less']).on('change', callback);
+    }
+    if (files_sass.length) {
+        gulp.watch(files_sass, ['sass']).on('change', callback);
+    }
+    if (files_css.length) {
+        gulp.watch(files_css, ['css']).on('change', callback);
+    }
+    if (files_js.length) {
+        gulp.watch(files_js, ['js']).on('change', callback);
+    }
 });
 
 /**
