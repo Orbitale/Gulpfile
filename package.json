@@ -9,7 +9,7 @@
         "gulp-watch": "^4.3",
         "gulp-concat": "^2.6",
         "gulp-uglyfly": "^1.4",
-        "gulp-cssnano": "^2.0",
+        "gulp-clean-css": "^2.0",
         "gulp-sourcemaps": "^1.6",
         "gulp-autoprefixer": "^3.1"
     },
