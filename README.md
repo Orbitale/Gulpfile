@@ -9,7 +9,7 @@ This is a sample of Gulpfile to be used with config instead of "re-developing" m
 ## What it does provide
 
 * Options:
-  *     `--prod`       If specified, will run cssnano and uglyfyjs when dumping the assets.
+  *     `--prod`       If specified, will run clean-css and uglyfyjs when dumping the assets.
 * Gulp commands:
   *     `less`         Dumps the sources in the `config.less` parameter from LESS files.
   *     `sass`         Dumps the sources in the `config.sass` parameter from SCSS files.
