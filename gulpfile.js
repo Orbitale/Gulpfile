@@ -169,6 +169,7 @@ gulp.task('watch', ['dump'], function() {
         callback = function(event) {
             console.log('File "' + event.path + '" updated');
         },
+        files_to_watch = [],
         i;
 
     console.info('Night gathers, and now my watch begins...');
@@ -178,28 +179,35 @@ gulp.task('watch', ['dump'], function() {
             continue;
         }
         files_less.push(config.less[i]);
-        console.info('Watching file: '+config.less[i]);
+        files_to_watch.push(config.less[i]);
     }
     for (i in config.sass) {
         if (!config.sass.hasOwnProperty(i)) {
             continue;
         }
         files_sass.push(config.sass[i]);
-        console.info('Watching file: '+config.sass[i]);
+        files_to_watch.push(config.sass[i]);
     }
     for (i in config.css) {
         if (!config.css.hasOwnProperty(i)) {
             continue;
         }
         files_css.push(config.css[i]);
-        console.info('Watching file: '+config.css[i]);
+        files_to_watch.push(config.css[i]);
     }
     for (i in config.js) {
         if (!config.js.hasOwnProperty(i)) {
             continue;
         }
         files_js.push(config.js[i]);
-        console.info('Watching file: '+config.js[i]);
+        files_to_watch.push(config.js[i]);
+    }
+
+    if (files_to_watch.length) {
+        console.info('Watching file(s):');
+        // Flatten the array
+        files_to_watch = [].concat.apply([], files_to_watch).sort();
+        console.info("       > "+files_to_watch.join("\n       > "));
     }
 
     if (files_less.length) {
@@ -229,7 +237,7 @@ gulp.task('default', function(){
     console.info("usage: gulp [command] [--prod]");
     console.info("");
     console.info("Options:");
-    console.info("    --prod       If specified, will run some minifycss and uglyfyjs when dumping the assets.");
+    console.info("    --prod       If specified, will run cssnano and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
     console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
@@ -244,4 +252,4 @@ gulp.task('default', function(){
 // Gulpfile with a single var as configuration.
 // License: MIT
 // Author: 2016 - Alex "Pierstoval" Rock Ancelet <alex@orbitale.io>
-// Repository: https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc
+// Repository: https://github.com/Orbitale/Gulpfile
