@@ -45,14 +45,19 @@ npm install
 **:warning: Warning:** This will override your potentially existing `gulpfile.js` or `package.json`
 files.
 
-### Install dependencies globally
+### Install Gulp globally
 
-If you are using this build in many projects, you can use this script to install all the necessary
-npm packages globally:
+If you are using gulpfiles in many projects (this one or any gulpfile), you can use this script to
+install gulp globally:
 
 ```bash
-npm install -g "gulp@^3.9" "gulp-if@^2.0" "gulp-less@^3.0" "gulp-sass@^2.2" "gulp-watch@^4.3" "gulp-concat@^2.6" "gulp-sourcemaps@^1.6" "gulp-uglyfly@^1.4" "gulp-cssnano@^2.0" "gulp-autoprefixer@^3.1"
+npm install -g "gulp@^3.9"
 ```
+
+Remember that **you still have to run `npm install` to have all gulp plugins**, else nothing will work.
+
+:warning: Be sure to install **only gulp** when you install globally. Else, other dependencies that
+are used locally may not match your dependencies.
 
 :warning: This may not be the best option though, remember that _global_ dependencies may create
 conflicts and not work properly (Nodejs and npm... :trollface: ).
