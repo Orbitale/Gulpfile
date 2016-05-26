@@ -4,6 +4,12 @@
 // The array VALUES contain a LIST OF SOURCE FILES
 var config = {
     "output_directory": "web",
+    "files_to_watch": [
+        // Here you can add other files to watch when using "gulp watch".
+        // They will automatically run the "dump" command.
+        // It is VERY useful when you use massively less/sass "import" rules, for example.
+        "src/AppBundle/Resources/public/less/*.less"
+    ],
     "less": {
         "css/main_less.css": [
             "web/components/bootstrap/less/bootstrap.less",
@@ -169,6 +175,7 @@ gulp.task('watch', ['dump'], function() {
         callback = function(event) {
             console.log('File "' + event.path + '" updated');
         },
+        other_files_to_watch = config.files_to_watch || [],
         files_to_watch = [],
         i;
 
@@ -210,6 +217,9 @@ gulp.task('watch', ['dump'], function() {
         console.info("       > "+files_to_watch.join("\n       > "));
     }
 
+    if (other_files_to_watch.length) {
+        gulp.watch(other_files_to_watch, ['dump']).on('change', callback);
+    }
     if (files_less.length) {
         gulp.watch(files_less, ['less']).on('change', callback);
     }
