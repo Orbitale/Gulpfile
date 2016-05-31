@@ -1,61 +1,79 @@
 /*
 There here is YOUR config
-This var is an exemple of the assets you can use in your own application.
-The array KEYS correspond to the OUTPUT files,
+This var is an example of the assets you can use in your own application.
+The array KEYS correspond to the OUTPUT files/directories,
 The array VALUES contain a LIST OF SOURCE FILES
 */
 var config = {
+
+    // The base output directory for all your assets
     "output_directory": "web",
+
+    /**
+     * Here you can add other files to watch when using "gulp watch".
+     * They will automatically run the "dump" command when modified.
+     * It is VERY useful when you use massively less/sass "import" rules, for example.
+     * Example:
+        "src/AppBundle/Resources/public/less/*.less"
+     */
     "files_to_watch": [
-        /**
-         * Here you can add other files to watch when using "gulp watch".
-         * They will automatically run the "dump" command when modified.
-         * It is VERY useful when you use massively less/sass "import" rules, for example.
-         * Example:
-            "src/AppBundle/Resources/public/less/*.less"
-         */
     ],
+
+    /**
+     * All files here are images that will be optimized/compressed with imagemin.
+     * The key corresponds to the output directory (prepended with "output_directory" previous option).
+     * Example:
+        "images/": [
+            "src/AppBundle/Resources/public/images/*"
+        ]
+     */
+    "images": {
+    },
+
+    /**
+     * All files from this section are parsed with LESS plugin and dumped into a CSS file.
+     * If using "--prod" in command line, will minify with "clean-css".
+     * Example:
+        "css/main_less.css": [
+            "web/components/bootstrap/less/bootstrap.less",
+            "src/AppBundle/Resources/public/less/main.less"
+        ]
+     */
     "less": {
-        /**
-         * All files from this section are parsed with LESS plugin and dumped into a CSS file.
-         * If using "--prod" in command line, will minify with "clean-css".
-         * Example:
-            "css/main_less.css": [
-                "web/components/bootstrap/less/bootstrap.less",
-                "src/AppBundle/Resources/public/less/main.less"
-            ]
-         */
     },
+
+    /**
+     * All files from this section are parsed with SASS plugin and dumped into a CSS file.
+     * If using "--prod" in command line, will minify with "clean-css".
+     * Example:
+        "css/main_sass.css": [
+            "src/AppBundle/Resources/public/less/main.scss"
+        ]
+     */
     "sass": {
-        /**
-         * All files from this section are parsed with SASS plugin and dumped into a CSS file.
-         * If using "--prod" in command line, will minify with "clean-css".
-         * Example:
-            "css/main_sass.css": [
-                "src/AppBundle/Resources/public/less/main.scss"
-            ]
-         */
     },
+
+    /**
+     * All files from this section are just concatenated and dumped into a CSS file.
+     * If using "--prod" in command line, will minify with "clean-css".
+     * Example:
+        "css/main.css": [
+            "src/AppBundle/Resources/public/css/main.css"
+        ]
+     */
     "css": {
-        /**
-         * All files from this section are just concatenated and dumped into a CSS file.
-         * If using "--prod" in command line, will minify with "clean-css".
-         * Example:
-            "css/main.css": [
-                "src/AppBundle/Resources/public/css/main.css"
-            ]
-         */
     },
+
+    /**
+     * All files from this section are just concatenated and dumped into a JS file.
+     * If using "--prod" in command line, will minify with "uglyflyjs".
+     * Example:
+        "js/main.js": [
+            "web/components/bootstrap/dist/bootstrap-src.js",
+            "src/AppBundle/Resources/public/css/main.js"
+        ]
+     */
     "js": {
-        /**
-         * All files from this section are just concatenated and dumped into a JS file.
-         * If using "--prod" in command line, will minify with "uglyflyjs".
-         * Example:
-            "js/main.js": [
-                "web/components/bootstrap/dist/bootstrap-src.js",
-                "src/AppBundle/Resources/public/css/main.js"
-            ]
-         */
     }
 };
 
@@ -87,21 +105,23 @@ Object.prototype.p_forEach = function(callback) {
 
 /*************** Global vars ***************/
 
-var isProd  = process.argv.indexOf('--prod') >= 0,
-    hasLess = config.less.p_size() > 0,
-    hasSass = config.sass.p_size() > 0,
-    hasCss  = config.css.p_size() > 0,
-    hasJs   = config.js.p_size() > 0
+var isProd    = process.argv.indexOf('--prod') >= 0,
+    hasImages = config.images.p_size() > 0,
+    hasLess   = config.less.p_size() > 0,
+    hasSass   = config.sass.p_size() > 0,
+    hasCss    = config.css.p_size() > 0,
+    hasJs     = config.js.p_size() > 0
 ;
 
 // Required extensions
 var gulp         = require('gulp'),
     gulpif       = require('gulp-if'),
-    watch        = require('gulp-watch'),
     less         = require('gulp-less'),
     sass         = require('gulp-sass'),
+    watch        = require('gulp-watch'),
     concat       = require('gulp-concat'),
     uglyfly      = require('gulp-uglyfly'),
+    imagemin     = require('gulp-imagemin'),
     cleancss     = require('gulp-clean-css'),
     sourcemaps   = require('gulp-sourcemaps'),
     autoprefixer = require('gulp-autoprefixer')
@@ -156,6 +176,35 @@ gulp.task('sass', function() {
             .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
+        ;
+
+        console.info(" [file+] "+assets_output+" >");
+        for (i = 0, l = assets.length; i < l; i++) {
+            console.info("       > "+assets[i]);
+        }
+    }
+});
+
+/**
+ * Compress images.
+ * Thanks to @docteurklein.
+ */
+gulp.task('images', function() {
+    var list = config.images,
+        outputDir = config.output_directory+'/',
+        assets_output, assets, pipes, i, l
+    ;
+    for (assets_output in list) {
+        if (!list.hasOwnProperty(assets_output)) { continue; }
+        assets = list[assets_output];
+        pipes = gulp
+            .src(assets)
+            .pipe(imagemin({
+                optimizationLevel: 7,
+                progressive: true,
+                interlaced: true
+            }))
+            .pipe(gulp.dest(outputDir + assets_output))
         ;
 
         console.info(" [file+] "+assets_output+" >");
@@ -223,6 +272,7 @@ gulp.task('js', function() {
  */
 gulp.task('watch', ['dump'], function() {
     var files_less = [],
+        files_images = [],
         files_css = [],
         files_sass = [],
         files_js = [],
@@ -230,10 +280,15 @@ gulp.task('watch', ['dump'], function() {
             console.log('File "' + event.path + '" updated');
         },
         other_files_to_watch = config.files_to_watch || [],
-        files_to_watch = [];
+        files_to_watch = []
+    ;
 
     console.info('Night gathers, and now my watch begins...');
 
+    config.images.p_forEach(function(key, images){
+        files_images.push(config.images[images]);
+        files_to_watch.push(config.images[images]);
+    });
     config.less.p_forEach(function(key, less){
         files_less.push(config.less[less]);
         files_to_watch.push(config.less[less]);
@@ -261,6 +316,9 @@ gulp.task('watch', ['dump'], function() {
     if (other_files_to_watch.length) {
         gulp.watch(other_files_to_watch, ['dump']).on('change', callback);
     }
+    if (hasImages) {
+        gulp.watch(files_less, ['less']).on('change', callback);
+    }
     if (hasLess) {
         gulp.watch(files_less, ['less']).on('change', callback);
     }
@@ -279,6 +337,7 @@ gulp.task('watch', ['dump'], function() {
  * Runs all the needed commands to dump all assets and manifests
  */
 var dumpTasks = [];
+if (hasImages) { dumpTasks.push('images'); }
 if (hasLess) { dumpTasks.push('less'); }
 if (hasSass) { dumpTasks.push('sass'); }
 if (hasCss) { dumpTasks.push('css'); }
@@ -296,12 +355,13 @@ gulp.task('default', function(){
     console.info("    --prod       If specified, will run clean-css and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
+    console.info("    images       Dumps the sources in the `config.images` parameter from image files.");
     console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
     console.info("    sass         Dumps the sources in the `config.sass` parameter from SCSS files.");
     console.info("    css          Dumps the sources in the `config.css` parameter from plain CSS files.");
     console.info("    js           Dumps the sources in the `config.js` parameter from plain JS files.");
     console.info("    dump         Executes all the above commands.");
-    console.info("    watch        Executes 'dump', then watch all sources, and dump all assets once any file is updated.");
+    console.info("    watch        Executes 'dump', then watches all sources, and dumps all assets once any file is updated.");
     console.info("");
 });
 
