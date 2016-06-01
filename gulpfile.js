@@ -123,8 +123,7 @@ var gulp         = require('gulp'),
     uglyfly      = require('gulp-uglyfly'),
     imagemin     = require('gulp-imagemin'),
     cleancss     = require('gulp-clean-css'),
-    sourcemaps   = require('gulp-sourcemaps'),
-    autoprefixer = require('gulp-autoprefixer')
+    sourcemaps   = require('gulp-sourcemaps')
 ;
 
 /*************** Gulp tasks ***************/
@@ -144,7 +143,6 @@ gulp.task('less', function() {
             .src(assets)
             .pipe(less())
             .pipe(concat(assets_output))
-            .pipe(autoprefixer())
             .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
@@ -172,7 +170,6 @@ gulp.task('sass', function() {
             .src(assets)
             .pipe(sass())
             .pipe(concat(assets_output))
-            .pipe(autoprefixer())
             .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
@@ -228,7 +225,6 @@ gulp.task('css', function() {
         pipes = gulp
             .src(assets)
             .pipe(concat(assets_output))
-            .pipe(autoprefixer())
             .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))

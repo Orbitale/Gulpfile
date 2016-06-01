@@ -11,8 +11,7 @@
         "gulp-uglyfly": "^1.4",
         "gulp-imagemin": "^3.0",
         "gulp-clean-css": "^2.0",
-        "gulp-sourcemaps": "^1.6",
-        "gulp-autoprefixer": "^3.1"
+        "gulp-sourcemaps": "^1.6"
     },
     "private": true,
     "engines": {
