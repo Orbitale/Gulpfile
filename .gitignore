@@ -1,2 +1,5 @@
 node_modules/
 
+/tests/gulpfile.js
+/tests/output_tests
+!/tests/output_tests/.gitkeep
