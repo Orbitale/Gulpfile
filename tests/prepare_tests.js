@@ -1,39 +1,39 @@
 var fs = require('fs');
 var path = require('path');
 var testsDir = path.dirname(require.main.filename);
-var gulpfileContents = fs.readFileSync(testsDir+'/../gulpfile.js').toString()
 
-    // Update output directory
-    .replace(
-        /"output_directory": "web",/g,
-        '"output_directory": "output_tests",'
-    )
+var config = {
+    "output_directory": "output_tests",
+    "images": {},
+    "files_to_watch": [],
+    "css": {
+        "css.css": [
+            "input/css.css"
+        ]
+    },
+    "less": {
+        "less.css": [
+            "input/less.less"
+        ]
+    },
+    "sass": {
+        "sass.css": [
+            "input/sass.scss"
+        ]
+    },
+    "js": {
+        "js.js": [
+            "input/js.js"
+        ]
+    }
+};
 
-    // Setup all command options to run everything
-
+var gulpfileContents = fs
+    .readFileSync(testsDir+'/../gulpfile.js')
+    .toString()
     .replace(
-        /"css": \{([^}]+)\}/g,
-        '"css": {' +
-            '"output_expected/css.css": [' +
-                '"input/css.css"' +
-            ']' +
-        '}'
-    )
-    .replace(
-        /"less": \{([^}]+)\}/g,
-        '"less": {' +
-            '"output_expected/less.less": [' +
-                '"input/less.less"' +
-            ']' +
-        '}'
-    )
-    .replace(
-        /"js": \{([^}]+)\}/g,
-        '"js": {' +
-            '"output_expected/js.js": [' +
-                '"input/js.js"' +
-            ']' +
-        '}'
+        /var config =(?:[^£]+)(\*)+ End config/g,
+        'var config = ' + JSON.stringify(config, null, 4) + ";\n"+ '/$1 End config'
     )
 ;
 

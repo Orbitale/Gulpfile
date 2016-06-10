@@ -1,0 +1,10 @@
+$color: #333333;
+
+@mixin color {
+    color: $color;
+}
+
+body {
+    border-radius: 3px;
+    @include color();
+}

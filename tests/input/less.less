@@ -1,8 +1,10 @@
-.border {
-    border: solid 1px black;
+@color: #333333;
+
+.color() {
+    color: @color;
 }
 
-.element {
-    display: none;
-    .border;
+body {
+    border-radius: 3px;
+    .color();
 }
