@@ -13,4 +13,4 @@ node_js:
     - "4.0"
 
 script:
-    - ./tests/tests.bash
+    - bash tests/tests.bash
