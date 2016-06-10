@@ -78,8 +78,9 @@ var config = {
 };
 
 /*************** End config ***************/
+
 // Everything AFTER this line of code is updatable to the latest version of this gulpfile.
-// Check it out there if you need: https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc
+// Check it out there if you need: https://github.com/Orbitale/Gulpfile
 
 /************* Some polyfills *************/
 
@@ -114,17 +115,18 @@ var isProd    = process.argv.indexOf('--prod') >= 0,
 ;
 
 // Required extensions
-var gulp         = require('gulp'),
-    gulpif       = require('gulp-if'),
-    less         = require('gulp-less'),
-    sass         = require('gulp-sass'),
-    watch        = require('gulp-watch'),
-    concat       = require('gulp-concat'),
-    uglyfly      = require('gulp-uglyfly'),
-    imagemin     = require('gulp-imagemin'),
-    cleancss     = require('gulp-clean-css'),
-    sourcemaps   = require('gulp-sourcemaps')
-;
+var gulp       = require('gulp');
+var gulpif     = require('gulp-if');
+var watch      = require('gulp-watch');
+var concat     = require('gulp-concat');
+var uglyfly    = require('gulp-uglyfly');
+var cleancss   = require('gulp-clean-css');
+var sourcemaps = require('gulp-sourcemaps');
+
+// Load other extensions only when having specific components. Saves memory & time execution.
+var less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
+var sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
+var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
 
 /*************** Gulp tasks ***************/
 
