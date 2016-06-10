@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Orbitale/Gulpfile.svg)](https://travis-ci.org/Orbitale/Gulpfile)
+
 # Base Gulpfile
 
 This is a sample of Gulpfile to be used with config instead of "re-developing" manually each gulpfile.
