@@ -82,23 +82,24 @@ var config = {
 // Everything AFTER this line of code is updatable to the latest version of this gulpfile.
 // Check it out there if you need: https://github.com/Orbitale/Gulpfile
 
-/************* Some polyfills *************/
+/************* Some helpers *************/
 
-Object.prototype.p_size = function() {
+var GulpfileHelpers = {};
+GulpfileHelpers.objectSize = function(object) {
     var size = 0, key;
-    for (key in this) {
-        if (this.hasOwnProperty(key)) {
+    for (key in object) {
+        if (object.hasOwnProperty(key)) {
             size++;
         }
     }
     return size;
 };
 
-Object.prototype.p_forEach = function(callback) {
+GulpfileHelpers.objectForEach = function(object, callback) {
     var key;
-    for (key in this) {
-        if (this.hasOwnProperty(key)) {
-            callback.apply(this, [key, this[key]]);
+    for (key in object) {
+        if (object.hasOwnProperty(key)) {
+            callback.apply(object, [key, object[key]]);
         }
     }
     return this;
@@ -106,13 +107,13 @@ Object.prototype.p_forEach = function(callback) {
 
 /*************** Global vars ***************/
 
-var isProd    = process.argv.indexOf('--prod') >= 0,
-    hasImages = config.images.p_size() > 0,
-    hasLess   = config.less.p_size() > 0,
-    hasSass   = config.sass.p_size() > 0,
-    hasCss    = config.css.p_size() > 0,
-    hasJs     = config.js.p_size() > 0
-;
+// These data are mostly used to introduce logic that will save memory and time.
+var isProd    = process.argv.indexOf('--prod') >= 0;
+var hasImages = GulpfileHelpers.objectSize(config.images) > 0;
+var hasLess   = GulpfileHelpers.objectSize(config.less) > 0;
+var hasSass   = GulpfileHelpers.objectSize(config.sass) > 0;
+var hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
+var hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
 var gulp       = require('gulp');
@@ -283,23 +284,23 @@ gulp.task('watch', ['dump'], function() {
 
     console.info('Night gathers, and now my watch begins...');
 
-    config.images.p_forEach(function(key, images){
+    Helpers.objectForEach(config.images, function(key, images){
         files_images.push(config.images[images]);
         files_to_watch.push(config.images[images]);
     });
-    config.less.p_forEach(function(key, less){
+    Helpers.objectForEach(config.less, function(key, less){
         files_less.push(config.less[less]);
         files_to_watch.push(config.less[less]);
     });
-    config.sass.p_forEach(function(key, sass){
+    Helpers.objectForEach(config.sass, function(key, sass){
         files_sass.push(config.sass[sass]);
         files_to_watch.push(config.sass[sass]);
     });
-    config.css.p_forEach(function(key, css){
+    Helpers.objectForEach(config.css, function(key, css){
         files_css.push(config.css[css]);
         files_to_watch.push(config.css[css]);
     });
-    config.js.p_forEach(function(key, js){
+    Helpers.objectForEach(config.js, function(key, js){
         files_js.push(config.js[js]);
         files_to_watch.push(config.js[js]);
     });
