@@ -284,23 +284,23 @@ gulp.task('watch', ['dump'], function() {
 
     console.info('Night gathers, and now my watch begins...');
 
-    Helpers.objectForEach(config.images, function(key, images){
+    GulpfileHelpers.objectForEach(config.images, function(key, images){
         files_images.push(config.images[images]);
         files_to_watch.push(config.images[images]);
     });
-    Helpers.objectForEach(config.less, function(key, less){
+    GulpfileHelpers.objectForEach(config.less, function(key, less){
         files_less.push(config.less[less]);
         files_to_watch.push(config.less[less]);
     });
-    Helpers.objectForEach(config.sass, function(key, sass){
+    GulpfileHelpers.objectForEach(config.sass, function(key, sass){
         files_sass.push(config.sass[sass]);
         files_to_watch.push(config.sass[sass]);
     });
-    Helpers.objectForEach(config.css, function(key, css){
+    GulpfileHelpers.objectForEach(config.css, function(key, css){
         files_css.push(config.css[css]);
         files_to_watch.push(config.css[css]);
     });
-    Helpers.objectForEach(config.js, function(key, js){
+    GulpfileHelpers.objectForEach(config.js, function(key, js){
         files_js.push(config.js[js]);
         files_to_watch.push(config.js[js]);
     });
