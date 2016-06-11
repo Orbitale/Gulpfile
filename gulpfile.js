@@ -102,7 +102,7 @@ GulpfileHelpers.objectForEach = function(object, callback) {
             callback.apply(object, [key, object[key]]);
         }
     }
-    return this;
+    return object;
 };
 
 /*************** Global vars ***************/
@@ -285,24 +285,24 @@ gulp.task('watch', ['dump'], function() {
     console.info('Night gathers, and now my watch begins...');
 
     GulpfileHelpers.objectForEach(config.images, function(key, images){
-        files_images.push(config.images[images]);
-        files_to_watch.push(config.images[images]);
+        files_images.push(images);
+        files_to_watch.push(images);
     });
     GulpfileHelpers.objectForEach(config.less, function(key, less){
-        files_less.push(config.less[less]);
-        files_to_watch.push(config.less[less]);
+        files_less.push(less);
+        files_to_watch.push(less);
     });
     GulpfileHelpers.objectForEach(config.sass, function(key, sass){
-        files_sass.push(config.sass[sass]);
-        files_to_watch.push(config.sass[sass]);
+        files_sass.push(sass);
+        files_to_watch.push(sass);
     });
     GulpfileHelpers.objectForEach(config.css, function(key, css){
-        files_css.push(config.css[css]);
-        files_to_watch.push(config.css[css]);
+        files_css.push(css);
+        files_to_watch.push(css);
     });
     GulpfileHelpers.objectForEach(config.js, function(key, js){
-        files_js.push(config.js[js]);
-        files_to_watch.push(config.js[js]);
+        files_js.push(js);
+        files_to_watch.push(js);
     });
 
     if (files_to_watch.length) {
@@ -316,7 +316,7 @@ gulp.task('watch', ['dump'], function() {
         gulp.watch(other_files_to_watch, ['dump']).on('change', callback);
     }
     if (hasImages) {
-        gulp.watch(files_less, ['less']).on('change', callback);
+        gulp.watch(files_images, ['images']).on('change', callback);
     }
     if (hasLess) {
         gulp.watch(files_less, ['less']).on('change', callback);
