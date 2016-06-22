@@ -324,10 +324,10 @@ gulp.task('watch', ['dump'], function() {
     if (hasSass) {
         gulp.watch(files_sass, ['sass']).on('change', callback);
     }
-    if (hasCss.length) {
+    if (hasCss) {
         gulp.watch(files_css, ['css']).on('change', callback);
     }
-    if (hasJs.length) {
+    if (hasJs) {
         gulp.watch(files_js, ['js']).on('change', callback);
     }
 });
