@@ -5,12 +5,18 @@ os:
     - osx
 
 node_js:
+    - "6"
+    - "6.1"
     - "5"
     - "5.1"
     - "4"
     - "4.2"
     - "4.1"
     - "4.0"
+matrix:
+    allow_failures:
+        - node_js: "6"
+        - node_js: "6.1"
 
 script:
     - bash tests/tests.bash
