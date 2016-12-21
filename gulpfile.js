@@ -4,7 +4,7 @@ This var is an example of the assets you can use in your own application.
 The array KEYS correspond to the OUTPUT files/directories,
 The array VALUES contain a LIST OF SOURCE FILES
 */
-var config = {
+const config = {
 
     // The base output directory for all your assets
     "output_directory": "web",
@@ -26,7 +26,7 @@ var config = {
      * They will automatically run the "dump" command when modified.
      * It is VERY useful when you use massively less/sass "import" rules, for example.
      * Example:
-        "src/AppBundle/Resources/public/less/*.less"
+     *     "src/AppBundle/Resources/public/less/*.less"
      */
     "files_to_watch": [
     ],
@@ -35,9 +35,9 @@ var config = {
      * All files here are images that will be optimized/compressed with imagemin.
      * The key corresponds to the output directory (prepended with "output_directory" previous option).
      * Example:
-        "images/": [
-            "src/AppBundle/Resources/public/images/*"
-        ]
+     *     "images/": [
+     *         "src/AppBundle/Resources/public/images/*"
+     *     ]
      */
     "images": {
     },
@@ -46,10 +46,10 @@ var config = {
      * All files from this section are parsed with LESS plugin and dumped into a CSS file.
      * If using "--prod" in command line, will minify with "clean-css".
      * Example:
-        "css/main_less.css": [
-            "web/components/bootstrap/less/bootstrap.less",
-            "src/AppBundle/Resources/public/less/main.less"
-        ]
+     *     "css/main_less.css": [
+     *         "node_modules/bootstrap/less/bootstrap.less",
+     *         "src/AppBundle/Resources/public/less/main.less"
+     *     ]
      */
     "less": {
     },
@@ -58,9 +58,9 @@ var config = {
      * All files from this section are parsed with SASS plugin and dumped into a CSS file.
      * If using "--prod" in command line, will minify with "clean-css".
      * Example:
-        "css/main_sass.css": [
-            "src/AppBundle/Resources/public/less/main.scss"
-        ]
+     *     "css/main_sass.css": [
+     *         "src/AppBundle/Resources/public/less/main.scss"
+     *     ]
      */
     "sass": {
     },
@@ -69,9 +69,9 @@ var config = {
      * All files from this section are just concatenated and dumped into a CSS file.
      * If using "--prod" in command line, will minify with "clean-css".
      * Example:
-        "css/main.css": [
-            "src/AppBundle/Resources/public/css/main.css"
-        ]
+     *     "css/main.css": [
+     *         "src/AppBundle/Resources/public/css/main.css"
+     *     ]
      */
     "css": {
     },
@@ -80,10 +80,10 @@ var config = {
      * All files from this section are just concatenated and dumped into a JS file.
      * If using "--prod" in command line, will minify with "uglyflyjs".
      * Example:
-        "js/main.js": [
-            "web/components/bootstrap/dist/bootstrap-src.js",
-            "src/AppBundle/Resources/public/css/main.js"
-        ]
+     *     "js/main.js": [
+     *         "web/components/bootstrap/dist/bootstrap-src.js",
+     *         "src/AppBundle/Resources/public/css/main.js"
+     *     ]
      */
     "js": {
     }
@@ -96,9 +96,9 @@ var config = {
 
 /************* Some helpers *************/
 
-var GulpfileHelpers = {};
+let GulpfileHelpers = {};
 GulpfileHelpers.objectSize = function(object) {
-    var size = 0, key;
+    let size = 0, key;
     for (key in object) {
         if (object.hasOwnProperty(key)) {
             size++;
@@ -108,7 +108,7 @@ GulpfileHelpers.objectSize = function(object) {
 };
 
 GulpfileHelpers.objectForEach = function(object, callback) {
-    var key;
+    let key;
     for (key in object) {
         if (object.hasOwnProperty(key)) {
             callback.apply(object, [key, object[key]]);
@@ -120,26 +120,26 @@ GulpfileHelpers.objectForEach = function(object, callback) {
 /*************** Global vars ***************/
 
 // These data are mostly used to introduce logic that will save memory and time.
-var isProd    = process.argv.indexOf('--prod') >= 0;
-var hasImages = GulpfileHelpers.objectSize(config.images) > 0;
-var hasLess   = GulpfileHelpers.objectSize(config.less) > 0;
-var hasSass   = GulpfileHelpers.objectSize(config.sass) > 0;
-var hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
-var hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
+const isProd    = process.argv.indexOf('--prod') >= 0;
+const hasImages = GulpfileHelpers.objectSize(config.images) > 0;
+const hasLess   = GulpfileHelpers.objectSize(config.less) > 0;
+const hasSass   = GulpfileHelpers.objectSize(config.sass) > 0;
+const hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
+const hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
-var gulp       = require('gulp');
-var gulpif     = require('gulp-if');
-var watch      = require('gulp-watch');
-var concat     = require('gulp-concat');
-var uglyfly    = require('gulp-uglyfly');
-var cleancss   = require('gulp-clean-css');
-var sourcemaps = require('gulp-sourcemaps');
+let gulp       = require('gulp');
+let gulpif     = require('gulp-if');
+let watch      = require('gulp-watch');
+let concat     = require('gulp-concat');
+let uglyfly    = require('gulp-uglyfly');
+let cleancss   = require('gulp-clean-css');
+let sourcemaps = require('gulp-sourcemaps');
 
 // Load other extensions only when having specific components. Saves memory & time execution.
-var less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
-var sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
-var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
+let less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
+let sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
+let imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
 
 /*************** Gulp tasks ***************/
 
@@ -147,7 +147,7 @@ var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
  * Dumps the LESS assets
  */
 gulp.task('less', function() {
-    var list = config.less,
+    let list = config.less,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -174,7 +174,7 @@ gulp.task('less', function() {
  * Dumps the SASS assets
  */
 gulp.task('sass', function() {
-    var list = config.sass,
+    let list = config.sass,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -226,7 +226,7 @@ gulp.task('copy', function() {
  * Thanks to @docteurklein.
  */
 gulp.task('images', function() {
-    var list = config.images,
+    let list = config.images,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -238,7 +238,8 @@ gulp.task('images', function() {
             .pipe(imagemin({
                 optimizationLevel: 7,
                 progressive: true,
-                interlaced: true
+                interlaced: true,
+                verbose: true
             }))
             .pipe(gulp.dest(outputDir + assets_output))
         ;
@@ -254,7 +255,7 @@ gulp.task('images', function() {
  * Dumps the CSS assets.
  */
 gulp.task('css', function() {
-    var list = config.css,
+    let list = config.css,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -280,7 +281,7 @@ gulp.task('css', function() {
  * Dumps the JS assets
  */
 gulp.task('js', function() {
-    var list = config.js,
+    let list = config.js,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -306,7 +307,7 @@ gulp.task('js', function() {
  * Will watch for files and run "dump" for each modification
  */
 gulp.task('watch', ['dump'], function() {
-    var files_less = [],
+    let files_less = [],
         files_images = [],
         files_css = [],
         files_sass = [],
@@ -371,7 +372,7 @@ gulp.task('watch', ['dump'], function() {
 /**
  * Runs all the needed commands to dump all assets and manifests
  */
-var dumpTasks = [];
+let dumpTasks = [];
 if (hasImages) { dumpTasks.push('images'); }
 if (hasLess) { dumpTasks.push('less'); }
 if (hasSass) { dumpTasks.push('sass'); }
