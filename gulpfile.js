@@ -103,6 +103,8 @@ var GulpfileHelpers = {};
  * @returns {Number}
  */
 GulpfileHelpers.objectSize = function(object) {
+    "use strict";
+
     let size = 0, key;
     for (key in object) {
         if (object.hasOwnProperty(key)) {
@@ -118,6 +120,8 @@ GulpfileHelpers.objectSize = function(object) {
  * @returns {Object}
  */
 GulpfileHelpers.objectForEach = function(object, callback) {
+    "use strict";
+
     let key;
     for (key in object) {
         if (object.hasOwnProperty(key)) {
@@ -157,6 +161,8 @@ var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
  * Dumps the LESS assets
  */
 gulp.task('less', function() {
+    "use strict";
+
     let list = config.less,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
@@ -184,6 +190,8 @@ gulp.task('less', function() {
  * Dumps the SASS assets
  */
 gulp.task('sass', function() {
+    "use strict";
+
     let list = config.sass,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
@@ -212,6 +220,8 @@ gulp.task('sass', function() {
  * Useful for simple "dist" files from node_modules directory, for example.
  */
 gulp.task('copy', function() {
+    "use strict";
+
     let list = config.copy,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
@@ -236,6 +246,8 @@ gulp.task('copy', function() {
  * Thanks to @docteurklein.
  */
 gulp.task('images', function() {
+    "use strict";
+
     let list = config.images,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
@@ -265,6 +277,8 @@ gulp.task('images', function() {
  * Dumps the CSS assets.
  */
 gulp.task('css', function() {
+    "use strict";
+
     let list = config.css,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
@@ -291,6 +305,8 @@ gulp.task('css', function() {
  * Dumps the JS assets
  */
 gulp.task('js', function() {
+    "use strict";
+
     let list = config.js,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
@@ -317,6 +333,8 @@ gulp.task('js', function() {
  * Will watch for files and run "dump" for each modification
  */
 gulp.task('watch', ['dump'], function() {
+    "use strict";
+
     let files_less = [],
         files_images = [],
         files_css = [],
