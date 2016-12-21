@@ -96,7 +96,12 @@ const config = {
 
 /************* Some helpers *************/
 
-let GulpfileHelpers = {};
+var GulpfileHelpers = {};
+
+/**
+ * @param {Object} object
+ * @returns {Number}
+ */
 GulpfileHelpers.objectSize = function(object) {
     let size = 0, key;
     for (key in object) {
@@ -107,6 +112,11 @@ GulpfileHelpers.objectSize = function(object) {
     return size;
 };
 
+/**
+ * @param {Object} object
+ * @param {Function} callback
+ * @returns {Object}
+ */
 GulpfileHelpers.objectForEach = function(object, callback) {
     let key;
     for (key in object) {
@@ -128,18 +138,18 @@ const hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
 const hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
-let gulp       = require('gulp');
-let gulpif     = require('gulp-if');
-let watch      = require('gulp-watch');
-let concat     = require('gulp-concat');
-let uglyfly    = require('gulp-uglyfly');
-let cleancss   = require('gulp-clean-css');
-let sourcemaps = require('gulp-sourcemaps');
+var gulp       = require('gulp');
+var gulpif     = require('gulp-if');
+var watch      = require('gulp-watch');
+var concat     = require('gulp-concat');
+var uglyfly    = require('gulp-uglyfly');
+var cleancss   = require('gulp-clean-css');
+var sourcemaps = require('gulp-sourcemaps');
 
 // Load other extensions only when having specific components. Saves memory & time execution.
-let less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
-let sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
-let imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
+var less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
+var sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
+var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
 
 /*************** Gulp tasks ***************/
 
@@ -372,7 +382,7 @@ gulp.task('watch', ['dump'], function() {
 /**
  * Runs all the needed commands to dump all assets and manifests
  */
-let dumpTasks = [];
+var dumpTasks = [];
 if (hasImages) { dumpTasks.push('images'); }
 if (hasLess) { dumpTasks.push('less'); }
 if (hasSass) { dumpTasks.push('sass'); }
