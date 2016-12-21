@@ -136,6 +136,7 @@ GulpfileHelpers.objectForEach = function(object, callback) {
 // These data are mostly used to introduce logic that will save memory and time.
 const isProd    = process.argv.indexOf('--prod') >= 0;
 const hasImages = GulpfileHelpers.objectSize(config.images) > 0;
+const hasCopy   = GulpfileHelpers.objectSize(config.copy) > 0;
 const hasLess   = GulpfileHelpers.objectSize(config.less) > 0;
 const hasSass   = GulpfileHelpers.objectSize(config.sass) > 0;
 const hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
@@ -402,6 +403,7 @@ gulp.task('watch', ['dump'], function() {
  */
 var dumpTasks = [];
 if (hasImages) { dumpTasks.push('images'); }
+if (hasCopy) { dumpTasks.push('copy'); }
 if (hasLess) { dumpTasks.push('less'); }
 if (hasSass) { dumpTasks.push('sass'); }
 if (hasCss) { dumpTasks.push('css'); }
