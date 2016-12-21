@@ -10,6 +10,18 @@ var config = {
     "output_directory": "web",
 
     /**
+     * This option is used to simply copy files into a new directory.
+     * This is very useful when copying dist files of external components.
+     * Example:
+     *     "fonts/": [
+     *         "node_modules/materialize-css/dist/fonts/*",
+     *         "node_modules/bootstrap/dist/fonts/*"
+     *     ]
+     */
+    "copy": {
+    },
+
+    /**
      * Here you can add other files to watch when using "gulp watch".
      * They will automatically run the "dump" command when modified.
      * It is VERY useful when you use massively less/sass "import" rules, for example.
@@ -176,6 +188,30 @@ gulp.task('sass', function() {
             .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
+        ;
+
+        console.info(" [file+] "+assets_output+" >");
+        for (i = 0, l = assets.length; i < l; i++) {
+            console.info("       > "+assets[i]);
+        }
+    }
+});
+
+/**
+ * Simply copy files into another directory.
+ * Useful for simple "dist" files from node_modules directory, for example.
+ */
+gulp.task('copy', function() {
+    let list = config.copy,
+        outputDir = config.output_directory+'/',
+        assets_output, assets, pipes, i, l
+    ;
+    for (assets_output in list) {
+        if (!list.hasOwnProperty(assets_output)) { continue; }
+        assets = list[assets_output];
+        pipes = gulp
+            .src(assets)
+            .pipe(gulp.dest(outputDir + assets_output))
         ;
 
         console.info(" [file+] "+assets_output+" >");
@@ -354,6 +390,7 @@ gulp.task('default', function(){
     console.info("    --prod       If specified, will run clean-css and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
+    console.info("    copy         Copy the sources in the `config.copy` into a destination folder.");
     console.info("    images       Dumps the sources in the `config.images` parameter from image files.");
     console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
     console.info("    sass         Dumps the sources in the `config.sass` parameter from SCSS files.");
