@@ -1,5 +1,5 @@
 {
-    "name": "fantastic",
+    "name": "orbitale-gulpfile",
     "description": "Allons-y!",
     "dependencies": {
         "gulp": "^3.9",
