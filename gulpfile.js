@@ -202,7 +202,7 @@ gulp.task('sass', function() {
         assets = list[assets_output];
         pipes = gulp
             .src(assets)
-            .pipe(sass())
+            .pipe(sass().on('error', sass.logError))
             .pipe(concat(assets_output))
             .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
