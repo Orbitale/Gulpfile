@@ -4,14 +4,14 @@
     "dependencies": {
         "gulp": "^3.9",
         "gulp-if": "^2.0",
-        "gulp-less": "^3.0",
-        "gulp-sass": "^2.2",
+        "gulp-less": "^3.3",
+        "gulp-sass": "^3.1",
         "gulp-watch": "^4.3",
         "gulp-concat": "^2.6",
         "gulp-uglyfly": "^1.4",
-        "gulp-imagemin": "^3.0",
-        "gulp-clean-css": "^2.0",
-        "gulp-sourcemaps": "^1.6"
+        "gulp-imagemin": "^3.1",
+        "gulp-clean-css": "^3.0",
+        "gulp-sourcemaps": "^2.4"
     },
     "private": true,
     "engines": {
