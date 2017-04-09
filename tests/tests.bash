@@ -30,4 +30,4 @@ echo "Preparing tests..."
 node tests/prepare_tests.js
 
 echo "Executing gulp dump..."
-./node_modules/.bin/gulp --gulpfile tests/gulpfile.js dump --prod
+./node_modules/.bin/gulp4 --gulpfile tests/gulpfile.js dump --prod

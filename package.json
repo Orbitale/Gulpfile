@@ -2,7 +2,7 @@
     "name": "orbitale-gulpfile",
     "description": "Allons-y!",
     "dependencies": {
-        "gulp": "^3.9",
+        "gulp4": "^4.0",
         "gulp-if": "^2.0",
         "gulp-less": "^3.3",
         "gulp-sass": "^3.1",
