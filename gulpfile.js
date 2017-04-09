@@ -185,7 +185,8 @@ gulp.task('less', function(done) {
             console.info("       > "+assets[i]);
         }
     }
-    done();
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
@@ -215,7 +216,8 @@ gulp.task('sass', function(done) {
             console.info("       > "+assets[i]);
         }
     }
-    done();
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
@@ -242,7 +244,8 @@ gulp.task('copy', function(done) {
             console.info("       > "+assets[i]);
         }
     }
-    done();
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
@@ -275,7 +278,8 @@ gulp.task('images', function(done) {
             console.info("       > "+assets[i]);
         }
     }
-    done();
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
@@ -304,7 +308,8 @@ gulp.task('css', function(done) {
             console.info("       > "+assets[i]);
         }
     }
-    done();
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
@@ -333,20 +338,16 @@ gulp.task('js', function(done) {
             console.info("       > "+assets[i]);
         }
     }
-    done();
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
  * Runs all the needed commands to dump all assets and manifests
  */
-var dumpTasks = [];
-if (hasImages) { dumpTasks.push('images'); }
-if (hasCopy) { dumpTasks.push('copy'); }
-if (hasLess) { dumpTasks.push('less'); }
-if (hasSass) { dumpTasks.push('sass'); }
-if (hasCss) { dumpTasks.push('css'); }
-if (hasJs) { dumpTasks.push('js'); }
-gulp.task('dump', gulp.parallel.apply(gulp, dumpTasks), function(done) { done(); });
+gulp.task('dump', gulp.series('images', 'copy', 'less', 'sass', 'css', 'js', function(done){
+    done();
+}));
 
 /**
  * Will watch for files and run "dump" for each modification
