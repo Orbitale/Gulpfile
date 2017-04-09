@@ -1,9 +1,9 @@
 /*
-There here is YOUR config
-This var is an example of the assets you can use in your own application.
-The array KEYS correspond to the OUTPUT files/directories,
-The array VALUES contain a LIST OF SOURCE FILES
-*/
+ * There here is YOUR config
+ * This var is an example of the assets you can use in your own application.
+ * The array KEYS correspond to the OUTPUT files/directories,
+ * The array VALUES contain a LIST OF SOURCE FILES
+ */
 const config = {
 
     // The base output directory for all your assets

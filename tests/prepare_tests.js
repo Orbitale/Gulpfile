@@ -32,8 +32,8 @@ var gulpfileContents = fs
     .readFileSync(testsDir+'/../gulpfile.js')
     .toString()
     .replace(
-        /var config =(?:[^£]+)(\*)+ End config/g,
-        'var config = ' + JSON.stringify(config, null, 4) + ";\n"+ '/$1 End config'
+        /const config =(?:[^£]+)(\*+) End config \*/g,
+        'const config = ' + JSON.stringify(config, null, 4) + ";\n"+ '/$1 End config *'
     )
 ;
 
