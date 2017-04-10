@@ -4,8 +4,17 @@ var testsDir = path.dirname(require.main.filename);
 
 var config = {
     "output_directory": "output_tests",
-    "images": {},
+    "images": {
+        "": [
+            "input/favicon.png"
+        ]
+    },
     "files_to_watch": [],
+    "copy": {
+        "": [
+            "input/text_to_copy.txt"
+        ]
+    },
     "css": {
         "css.css": [
             "input/css.css"
