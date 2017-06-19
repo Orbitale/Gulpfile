@@ -1,5 +1,7 @@
 node_modules/
+yarn.lock
 
 /tests/gulpfile.js
+/tests/gulpfile_errored.js
 /tests/output_tests
 !/tests/output_tests/.gitkeep
