@@ -37,6 +37,9 @@ var config = {
     }
 };
 
+/**
+ * Store working gulpfile
+ */
 var gulpfileContents = fs
     .readFileSync(testsDir+'/../gulpfile.js')
     .toString()
@@ -48,3 +51,19 @@ var gulpfileContents = fs
 
 fs.writeFileSync(testsDir+'/gulpfile.js', gulpfileContents);
 
+/**
+ * Store erroring gulpfile
+ */
+
+config.js['js.js'] = ['file_that_does_not_exist.js'];
+
+gulpfileContents = fs
+    .readFileSync(testsDir+'/../gulpfile.js')
+    .toString()
+    .replace(
+    /const config =(?:[^£]+)(\*+) End config \*/g,
+        'const config = ' + JSON.stringify(config, null, 4) + ";\n"+ '/$1 End config *'
+    )
+;
+
+fs.writeFileSync(testsDir+'/gulpfile_errored.js', gulpfileContents);
