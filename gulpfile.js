@@ -164,6 +164,8 @@ var erroredFiles = [];
 var checkCallback = function(key, values) {
     values.forEach(function(fileName) {
         try {
+            // Remove wildcards
+            fileName = fileName.replace(/(?:(?:\*\.\w{2,4}(?:$|\/))|(?:\/\*+(?:$|\/)))/gi, '');
             fs.statSync(fileName);
         } catch (e) {
             if (e.code === 'ENOENT' || (e.message && e.message.match(/no such file/i)) || e.match(/no such file/i)) {
