@@ -205,6 +205,11 @@ gulp.task('less', function(done) {
         pipesDone = 0
     ;
 
+    if (outputCount === 0) {
+        done();
+        return;
+    }
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
@@ -243,6 +248,11 @@ gulp.task('sass', function(done) {
         outputCount = GulpfileHelpers.objectSize(list),
         pipesDone = 0
     ;
+
+    if (outputCount === 0) {
+        done();
+        return;
+    }
 
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
@@ -284,6 +294,11 @@ gulp.task('copy', function(done) {
         pipesDone = 0
     ;
 
+    if (outputCount === 0) {
+        done();
+        return;
+    }
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
@@ -319,6 +334,11 @@ gulp.task('images', function(done) {
         outputCount = GulpfileHelpers.objectSize(list),
         pipesDone = 0
     ;
+
+    if (outputCount === 0) {
+        done();
+        return;
+    }
 
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
@@ -360,6 +380,12 @@ gulp.task('css', function(done) {
         outputCount = GulpfileHelpers.objectSize(list),
         pipesDone = 0
     ;
+
+    if (outputCount === 0) {
+        done();
+        return;
+    }
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
@@ -397,6 +423,11 @@ gulp.task('js', function(done) {
         outputCount = GulpfileHelpers.objectSize(list),
         pipesDone = 0
     ;
+
+    if (outputCount === 0) {
+        done();
+        return;
+    }
 
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
