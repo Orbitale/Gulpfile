@@ -1,7 +1,8 @@
 node_modules/
 yarn.lock
+yarn-error.log
+package-lock.json
 
-/tests/gulpfile.js
-/tests/gulpfile_errored.js
-/tests/output_tests
-!/tests/output_tests/.gitkeep
+/tests/fixtures/gulpfile_*.js
+/tests/fixtures/output/*
+!/tests/fixtures/output/.gitkeep
