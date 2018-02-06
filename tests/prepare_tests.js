@@ -1,9 +1,17 @@
-var fs = require('fs');
-var path = require('path');
-var testsDir = path.dirname(require.main.filename);
+let fs = require('fs');
+let path = require('path');
+let testsDir = path.dirname(require.main.filename);
 
-var config = {
-    "output_directory": "output_tests",
+let dumpGulpfile = (fileName, config) => {
+    fs.writeFileSync(testsDir+'/fixtures/gulpfile_'+fileName+'.js', fs.readFileSync(testsDir+'/../gulpfile.js').toString().replace(
+        /const config =(?:[^£]+)(\*+) End config \*/g,
+        'const config = ' + JSON.stringify(config, null, 4) + ";\n"+ '/$1 End config *'
+    ));
+    console.log('> fixtures/gulpfile_'+fileName+'.js');
+};
+
+let config = {
+    "output_directory": "output",
     "images": {
         "": [
             "input/favicon.png"
@@ -37,33 +45,12 @@ var config = {
     }
 };
 
-/**
- * Store working gulpfile
- */
-var gulpfileContents = fs
-    .readFileSync(testsDir+'/../gulpfile.js')
-    .toString()
-    .replace(
-        /const config =(?:[^£]+)(\*+) End config \*/g,
-        'const config = ' + JSON.stringify(config, null, 4) + ";\n"+ '/$1 End config *'
-    )
-;
+dumpGulpfile('successful', config);
 
-fs.writeFileSync(testsDir+'/gulpfile.js', gulpfileContents);
+var missingFile = config;
+missingFile.js['js.js'] = ['file_that_does_not_exist.js'];
+dumpGulpfile('missing_file', missingFile);
 
-/**
- * Store erroring gulpfile
- */
-
-config.js['js.js'] = ['file_that_does_not_exist.js'];
-
-gulpfileContents = fs
-    .readFileSync(testsDir+'/../gulpfile.js')
-    .toString()
-    .replace(
-    /const config =(?:[^£]+)(\*+) End config \*/g,
-        'const config = ' + JSON.stringify(config, null, 4) + ";\n"+ '/$1 End config *'
-    )
-;
-
-fs.writeFileSync(testsDir+'/gulpfile_errored.js', gulpfileContents);
+var silentGulpError = config;
+silentGulpError.js['js.js'] = ['input/js/*'];
+dumpGulpfile('missing_wildcard_files', silentGulpError);

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set +e
 
 # Go back to root project directory
 cd `dirname $0`/../
@@ -18,7 +18,6 @@ do
     shift
 done
 
-
 if [[ ${REINSTALL} == 1 || ! -d "node_modules" ]]; then
     echo "Removing node modules..."
     rm -rf node_modules/
@@ -27,25 +26,58 @@ if [[ ${REINSTALL} == 1 || ! -d "node_modules" ]]; then
     yarn
 fi
 
-rm -f tests/output_tests/*
-test -f tests/gulpfile.js && rm tests/gulpfile.js
+rm -f tests/gulpfiles/*
 
 echo "Preparing tests..."
 node tests/prepare_tests.js
 
-echo "Executing gulp dump..."
-node node_modules/gulp4/bin/gulp.js --gulpfile tests/gulpfile.js test --prod
+echo "Executing tests..."
 
-correctExitCode=$?
+echo "Moving to the tests/fixtures/ directory"
+cd tests/fixtures
 
-echo "Executing gulp dump for gulpfile that should have an error..."
-set +e
-notFoundOutput=$(node node_modules/gulp/bin/gulp.js --gulpfile tests/gulpfile_errored.js test --prod 2>&1)
-erroredExitCode=$?
-set -e
+function process_gulpfile {
+    local gulpfile=$1
+    rm -rf tests/output_tests/*
+    output=$(node ../../node_modules/gulp4/bin/gulp.js --gulpfile gulpfile_${gulpfile}.js test --prod 2>&1)
+    exitCode=$?
+    return ${exitCode}
+}
 
-echo "Test expected files are correctly dumped"
-echo -n " > gulpfile.js " && test ${correctExitCode} == 1 && echo "OK"
+errors=()
 
-echo "Test gulpfiles with errors return the correct exit codes"
-echo -n " > gulpfile_errored.js " && test ${erroredExitCode} == 1 && echo "OK"
+function assert {
+    gulpfile=$1
+    shift
+    "$@"
+    exitCode=$?
+    if [ ${exitCode} -eq 0 ]; then
+        echo -n "."
+    else
+        echo -n "F"
+        errors+=("${gulpfile}")
+    fi
+}
+
+gulpfile="successful" && process_gulpfile "${gulpfile}"
+assert "${gulpfile}" test "${exitCode}" == 0
+
+rm -f output/*
+
+gulpfile="missing_file" && process_gulpfile "${gulpfile}"
+assert "${gulpfile}" test "${exitCode}" == 1
+strtocheck="Missing input files"
+assert "${gulpfile}" test "${output#*$strtocheck}" != "$output"
+
+rm -f output/*
+
+gulpfile="missing_wildcard_files" && process_gulpfile "${gulpfile}"
+assert "${gulpfile}" test "${exitCode}" == 1
+strtocheck="Missing input files"
+assert "${gulpfile}" test "${output#*$strtocheck}" != "$output"
+
+rm -f output/*
+
+echo ""
+echo "Failing gulpfiles:"
+echo "${errors}"
