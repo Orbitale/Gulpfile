@@ -149,7 +149,6 @@ const pump       = require('pump');
 const glob       = require('glob');
 const gulp       = require('gulp4');
 const gulpif     = require('gulp-if');
-const watch      = require('gulp-watch');
 const concat     = require('gulp-concat');
 const uglify     = require('gulp-uglify');
 const cleancss   = require('gulp-clean-css');
@@ -327,9 +326,9 @@ gulp.task('images', function(done) {
         pump([
             gulp.src(assets),
             imagemin([
-                imagemin.gifsicle({interlaced: true}),
-                imagemin.jpegtran({progressive: true}),
-                imagemin.optipng({optimizationLevel: 7}),
+                imagemin.gifsicle(isProd ? {interlaced: true} : {}),
+                imagemin.jpegtran(isProd ? {progressive: true} : {}),
+                imagemin.optipng(isProd ? {optimizationLevel: 7} : {}),
                 imagemin.svgo({plugins: [{removeViewBox: true}]})
             ]),
             gulp.dest(outputDir + assets_output),
