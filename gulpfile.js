@@ -96,39 +96,39 @@ const config = {
 
 /************* Some helpers *************/
 
-var GulpfileHelpers = {};
+const GulpfileHelpers = {
+    /**
+     * @param {Object} object
+     * @returns {Number}
+     */
+    objectSize: function(object) {
+        "use strict";
+        let size = 0;
 
-/**
- * @param {Object} object
- * @returns {Number}
- */
-GulpfileHelpers.objectSize = function(object) {
-    "use strict";
-    let size = 0;
-
-    for (let key in object) {
-        if (object.hasOwnProperty(key)) {
-            size++;
+        for (let key in object) {
+            if (object.hasOwnProperty(key)) {
+                size++;
+            }
         }
-    }
 
-    return size;
-};
+        return size;
+    },
 
-/**
- * @param {Object} object
- * @param {Function} callback
- * @returns {Object}
- */
-GulpfileHelpers.objectForEach = function(object, callback) {
-    "use strict";
-    for (let key in object) {
-        if (object.hasOwnProperty(key)) {
-            callback.apply(object, [key, object[key]]);
+    /**
+     * @param {Object} object
+     * @param {Function} callback
+     * @returns {Object}
+     */
+    objectForEach: function(object, callback) {
+        "use strict";
+        for (let key in object) {
+            if (object.hasOwnProperty(key)) {
+                callback.apply(object, [key, object[key]]);
+            }
         }
-    }
 
-    return object;
+        return object;
+    }
 };
 
 /*************** Global vars ***************/
