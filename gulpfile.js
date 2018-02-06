@@ -499,7 +499,7 @@ gulp.task('test', gulp.series('dump', function(done) {
     let filesList = [];
     let forEach = GulpfileHelpers.objectForEach;
     let push = (key) => {
-        filesList.push(config.output_directory+'/'+key);
+        filesList.push(key);
     };
 
     /**
@@ -539,7 +539,7 @@ gulp.task('test', gulp.series('dump', function(done) {
             } else {
                 let stat = fs.statSync(name);
                 if (stat.isFile()) {
-                    filesList.push(name);
+                    filesList.push(path.basename(name));
                 } else if (stat.isDirectory()) {
                     // Force glob search for directories
                     cleanAndPush(name, glob.sync(name.replace(/\/+$/gi, '')+'/**', { nodir: true }));
@@ -571,7 +571,7 @@ gulp.task('test', gulp.series('dump', function(done) {
     let pad = (s, p) => { if (typeof p === 'undefined') { p = padString; } return String(p+s).slice(-p.length); };
 
     filesList.forEach(function(file){
-        let fullPath = path.resolve(__dirname.replace(/\/$/, '')+'/'+file.replace(/^\/?/g, ''));
+        let fullPath = path.resolve(config.output_directory.replace(/\/$/, '')+'/'+file.replace(/^\/?/g, ''));
         fs.access(fullPath, function(err){
             if (!err) {
                 valid++;
