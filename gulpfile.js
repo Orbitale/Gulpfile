@@ -161,9 +161,14 @@ const imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; }
 /************** Files checks **************/
 
 var erroredFiles = [];
+config.output_directory = config.output_directory.replace(/[\\\/]$/gi, '');
 
 var checkCallback = function(key, values) {
     values.forEach(function(fileName) {
+        if (glob.hasMagic(fileName)) {
+            // Don't handle wildcards
+            return;
+        }
         try {
             // Remove wildcards
             fileName = fileName.replace(/(?:(?:\*\.\w{2,4}(?:$|\/))|(?:\/\*+(?:$|\/)))/gi, '');
@@ -525,11 +530,12 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
     done();
 })));
 
-gulp.task('test', gulp.series('dump', function(done) {
+gulp.task('test', gulp.series('dump', async function(done) {
     "use strict";
     let filesList = [];
     let forEach = GulpfileHelpers.objectForEach;
     let push = (key) => {
+        key = config.output_directory+'/'+key;
         filesList.push(key);
     };
 
@@ -581,6 +587,14 @@ gulp.task('test', gulp.series('dump', function(done) {
         });
     };
 
+    await GulpfileHelpers.objectForEach(config.images, function(outDir, list){
+        list.forEach(function(element){
+            outDir = outDir.replace(/[\\\/]$/gi, '');
+            let finalPath = config.output_directory+'/'+outDir+'/'+path.basename(element);
+            console.info(`Pushing ${finalPath}`);
+            filesList.push(finalPath);
+        });
+    });
     forEach(config.images, pushFromDirectory);
     forEach(config.copy, pushFromDirectory);
 
@@ -601,14 +615,14 @@ gulp.task('test', gulp.series('dump', function(done) {
     // Manual "left-pad"
     let pad = (s, p) => { if (typeof p === 'undefined') { p = padString; } return String(p+s).slice(-p.length); };
 
-    filesList.forEach(function(file){
-        let fullPath = path.resolve(config.output_directory.replace(/\/$/, '')+'/'+file.replace(/^\/?/g, ''));
+    await filesList.forEach(function(file){
+        let fullPath = path.resolve(file);
         fs.access(fullPath, function(err){
             if (!err) {
                 valid++;
                 process.stdout.write('.');
             } else {
-                invalid.push(file);
+                invalid.push(fullPath);
                 process.stdout.write('F');
             }
 
@@ -625,28 +639,26 @@ gulp.task('test', gulp.series('dump', function(done) {
                     spaces += ' ';
                 }
                 process.stdout.write(' '+spaces+valid+' / ' + processedFiles + " (100%)\n");
-
-                finish();
             }
         });
     });
 
-    function finish() {
-        if (invalid.length) {
-            process.stdout.write("These files seem not to have been dumped by Gulp flow:\n");
-            invalid.forEach((file) => {
-                process.stdout.write(" > "+file+"\n");
-            });
-
-            done();
-            process.exit(1);
-
-            return;
-        }
+    if (invalid.length) {
+        process.stdout.write("These files seem not to have been dumped by Gulp flow:\n");
+        invalid.forEach((file) => {
+            process.stdout.write(" > "+file+"\n");
+        });
 
         done();
-        process.exit(0);
+        process.exit(1);
+
+        return;
     }
+
+    process.stdout.write("All files seem to have been dumped correctly 👍\n");
+
+    done();
+    process.exit(0);
 }));
 
 /**
