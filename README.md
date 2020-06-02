@@ -1,3 +1,5 @@
+:warning: This package is not maintained anymore. It should still work though. For an alternative, take a look at [Rollup](https://rollupjs.org) or [Webpack](https://webpack.js.org/).
+
 [![Build Status](https://travis-ci.org/Orbitale/Gulpfile.svg?branch=gulp4)](https://travis-ci.org/Orbitale/Gulpfile)
 
 # Base Gulpfile
